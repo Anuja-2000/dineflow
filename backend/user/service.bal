@@ -1,4 +1,5 @@
 import ballerina/http;
+import user.model;
 
 # A service representing a network-accessible API
 # bound to port `9090`.
@@ -13,5 +14,13 @@ service / on new http:Listener(9090) {
             return error("name should not be empty!");
         }
         return string `Hello, ${name}`;
+    }
+
+    resource function post user(@http:Payload model:User user) returns string?|error {
+        return signUp(user);
+    }
+
+    resource  function get getAllUsers() returns model:User[]|error {
+        return getAllUsers();  
     }
 }
