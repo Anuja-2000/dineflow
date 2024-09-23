@@ -4,4 +4,5 @@ public type User record {|
     string email;
     string password;
     string gender;
+    string imgUrl;
 |};

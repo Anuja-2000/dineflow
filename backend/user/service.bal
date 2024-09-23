@@ -17,10 +17,19 @@ service / on new http:Listener(9090) {
     }
 
     resource function post user(@http:Payload model:User user) returns string?|error {
+        user.imgUrl = "";
         return signUp(user);
     }
 
     resource  function get getAllUsers() returns model:User[]|error {
         return getAllUsers();  
+    }
+
+    resource function get getOneUser(string id) returns model:User|error {
+        return getOneUser(id);
+    }
+
+    resource function put updateUser(@http:Payload model:User user) returns string {
+        return updateUser(user);
     }
 }

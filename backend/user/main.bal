@@ -21,8 +21,8 @@ isolated function signUp(model:User user) returns string?|error {
     }
     string userId = uuid:createRandomUuid();
     sql:ExecutionResult result = check dbClient->execute(`
-        INSERT INTO user (id, name, email, password, gender)
-        VALUES (${userId}, ${user.name}, ${user.email}, ${user.password}, ${user.gender})
+        INSERT INTO user (id, name, email, password, gender, imgUrl)
+        VALUES (${userId}, ${user.name}, ${user.email}, ${user.password}, ${user.gender}, ${user.imgUrl})
     `);
     string? resultMsg = result.affectedRowCount == 1 ? "User added successfully" : "User addition failed";
     return resultMsg;
@@ -45,12 +45,23 @@ isolated function isUserExists(string email) returns boolean {
     
 }
 
-// isolated function getEmployee(int id) returns Employee|error {
-//     Employee employee = check dbClient->queryRow(
-//         `SELECT * FROM Employees WHERE employee_id = ${id}`
-//     );
-//     return employee;
-// }
+isolated function getOneUser(string id) returns model:User|error {
+    do {
+	    model:User? user = check dbClient->queryRow(
+	        `SELECT * FROM user WHERE id = ${id}`
+	    );
+        if user is () {
+        return error("User not found");
+        }else {
+        return user;
+        }
+    } on fail var e {
+        log:printError(e.message());
+    	return error("User not found");
+    }
+    
+}
+
 
 isolated function getAllUsers() returns model:User[]|error {
     model:User[] users = [];
@@ -63,6 +74,25 @@ isolated function getAllUsers() returns model:User[]|error {
         };
     check resultStream.close();
     return users;
+}
+
+isolated function updateUser(model:User user) returns string {
+    do {
+	    sql:ExecutionResult result = check dbClient->execute(
+	        `UPDATE user SET 
+            name = ${user.name}, 
+            email = ${user.email}, 
+            password = ${user.password}, 
+            gender = ${user.gender}, 
+            imgUrl = ${user.imgUrl} 
+            WHERE id = ${user.id}`
+	    );
+        
+        return string `User updated successfully ${result.affectedRowCount ?: 0} rows updated`;
+    } on fail var e {
+        log:printError(e.message());
+    	return "User update failed" + e.message();
+    }
 }
 
 // isolated function updateEmployee(Employee emp) returns int|error {
