@@ -94,35 +94,3 @@ isolated function updateUser(model:User user) returns string {
     	return "User update failed" + e.message();
     }
 }
-
-// isolated function updateEmployee(Employee emp) returns int|error {
-//     sql:ExecutionResult result = check dbClient->execute(`
-//         UPDATE Employees SET
-//             first_name = ${emp.first_name}, 
-//             last_name = ${emp.last_name},
-//             email = ${emp.email},
-//             phone = ${emp.phone},
-//             hire_date = ${emp.hire_date}, 
-//             manager_id = ${emp.manager_id},
-//             job_title = ${emp.job_title}
-//         WHERE employee_id = ${emp.employee_id}  
-//     `);
-//     int|string? lastInsertId = result.lastInsertId;
-//     if lastInsertId is int {
-//         return lastInsertId;
-//     } else {
-//         return error("Unable to obtain last insert ID");
-//     }
-// }
-
-// isolated function removeEmployee(int id) returns int|error {
-//     sql:ExecutionResult result = check dbClient->execute(`
-//         DELETE FROM Employees WHERE employee_id = ${id}
-//     `);
-//     int? affectedRowCount = result.affectedRowCount;
-//     if affectedRowCount is int {
-//         return affectedRowCount;
-//     } else {
-//         return error("Unable to obtain the affected row count");
-//     }
-// }
