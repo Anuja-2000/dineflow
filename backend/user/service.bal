@@ -1,19 +1,35 @@
 import ballerina/http;
 import user.model;
 
-# A service representing a network-accessible API
-# bound to port `9090`.
-service / on new http:Listener(9091) {
 
-    # A resource for generating greetings
-    # + name - name as a string or nil
-    # + return - string name with hello message or error
+service / on new http:Listener(9091) {
 
     resource function post user(@http:Payload model:User user) returns string?|error {
         user.imgUrl = "";
         return signUp(user);
     }
 
+    resource function post login(string email, string password) returns string?|error {
+        string?|error res = login(email, password);
+
+        if res == "Invalid password" {
+            return error("Invalid credentials");
+        } else {
+            return res;
+        }
+    }
+
+    @http:ResourceConfig {
+        auth: [
+            {
+                jwtValidatorConfig: {
+                    issuer: "wso2",
+                    audience: ["ballerina"],
+                    "expTime": 3600
+                }
+            }
+        ]
+    }
     resource  function get getAllUsers() returns model:User[]|error {
         return getAllUsers();  
     }
