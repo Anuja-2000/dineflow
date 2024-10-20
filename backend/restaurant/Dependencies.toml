@@ -9,13 +9,11 @@ distribution-version = "2201.10.0"
 
 [[package]]
 org = "anuja"
-name = "user"
+name = "restaurant"
 version = "0.1.0"
 dependencies = [
-	{org = "ballerina", name = "crypto"},
 	{org = "ballerina", name = "http"},
 	{org = "ballerina", name = "io"},
-	{org = "ballerina", name = "jwt"},
 	{org = "ballerina", name = "log"},
 	{org = "ballerina", name = "sql"},
 	{org = "ballerina", name = "test"},
@@ -25,8 +23,8 @@ dependencies = [
 	{org = "ballerinax", name = "mysql.driver"}
 ]
 modules = [
-	{org = "anuja", packageName = "user", moduleName = "user"},
-	{org = "anuja", packageName = "user", moduleName = "user.model"}
+	{org = "anuja", packageName = "restaurant", moduleName = "restaurant"},
+	{org = "anuja", packageName = "restaurant", moduleName = "restaurant.model"}
 ]
 
 [[package]]
@@ -67,9 +65,6 @@ version = "2.7.2"
 dependencies = [
 	{org = "ballerina", name = "jballerina.java"},
 	{org = "ballerina", name = "time"}
-]
-modules = [
-	{org = "ballerina", packageName = "crypto", moduleName = "crypto"}
 ]
 
 [[package]]
@@ -145,9 +140,6 @@ dependencies = [
 	{org = "ballerina", name = "lang.string"},
 	{org = "ballerina", name = "log"},
 	{org = "ballerina", name = "time"}
-]
-modules = [
-	{org = "ballerina", packageName = "jwt", moduleName = "jwt"}
 ]
 
 [[package]]
